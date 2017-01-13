@@ -26,6 +26,10 @@ var Profile = React.createClass({
       repos: ['a', 'b', 'c']
     }
   },
+  handleAddNote: function(newNote) {
+    this.ref.child(this.props.params.username)
+            .push(newNote);
+  },
   render: function() {
     return (
       <div className="row">
@@ -34,12 +38,14 @@ var Profile = React.createClass({
             bio={this.state.bio} />
         </div>
         <div className="col-md-4">
-          <Repos username={this.props.params.username} 
+          <Repos username={this.props.params.username}
             repos={this.state.repos} />
         </div>
         <div className="col-md-4">
-          <Notes username={this.props.params.username} 
-            notes={this.state.notes} />
+          <Notes
+            username={this.props.params.username} 
+            notes={this.state.notes}
+            addNote={this.handleAddNote} />
         </div>
       </div>
     )
