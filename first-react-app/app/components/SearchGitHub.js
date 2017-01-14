@@ -1,23 +1,21 @@
-var React = require("react");
-var Router = require("react-router");
+import React from "react";
 
 
-var SearchGitHub = React.createClass({
-  mixins: [Router.History],
-  getRef: function(ref) {
+class SearchGitHub extends React.Component {
+  getRef(ref) {
     this.usernameRef = ref;
-  },
-  handleSubmit: function() {
-    var username = this.usernameRef.value;
+  }
+  handleSubmit() {
+    const username = this.usernameRef.value;
     this.usernameRef.value = "";
-    this.history.pushState(null, "/profile/" + username);
-  },
-  render: function() {
+    this.props.history.pushState(null, "/profile/" + username);
+  }
+  render() {
     return (
       <div className="col-sm-12">
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={() => this.handleSubmit()}>
           <div className="col-sm-7 form-group">
-            <input type="text" className="form-control"ref={this.getRef}/>
+            <input type="text" className="form-control"ref={ref => this.getRef(ref)}/>
           </div>
           <div className="col-sm-5 form-group">
             <button type="submit" className="btn btn-block btn-primary">
@@ -27,8 +25,12 @@ var SearchGitHub = React.createClass({
         </form>
       </div>
     )
-  }
-});
+  } 
+}
+
+SearchGitHub.propTypes = {
+  history: React.PropTypes.object.isRequired
+}
 
 
-module.exports = SearchGitHub;
+export default SearchGitHub;
