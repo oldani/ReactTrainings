@@ -5,17 +5,33 @@ var ReactFireMixin = require("reactfire");
 var Repos = require("./GitHub/Repos");
 var UserProfile = require("./GitHub/UserProfile");
 var Notes = require("./Notes/Notes");
+var helpers = require("../utils/helpers");
 
 
 var Profile = React.createClass({
   mixins: [ReactFireMixin],
+  componentWillReceiveProps: function(nextProps) {
+    this.unbind('notes');
+    this.init(nextProps.params.username);
+  },
   componentDidMount: function() {
     this.ref = new Firebase('https://first-react-app-578fb.firebaseio.com/');
-    var childRef = this.ref.child(this.props.params.username);
-    this.bindAsArray(childRef, 'notes');
+    this.init(this.props.params.username);
   },
   componentWillUnmount: function() {
     this.unbind('notes');
+  },
+  init: function(username) {
+    var childRef = this.ref.child(username);
+    this.bindAsArray(childRef, 'notes');
+
+    helpers.getGitHubInfo(username)
+           .then(function(data) {
+              this.setState({
+                bio: data.bio,
+                repos: data.repos
+              });
+           }.bind(this));
   },
   getInitialState: function() {
     return {
