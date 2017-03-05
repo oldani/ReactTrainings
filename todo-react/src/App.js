@@ -2,17 +2,26 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {TodoForm, TodoList} from './components/todo'
-import {addTodo, generateId} from './lib/helpers'
+import {addTodo, generateId, findById, toggleTodo, updateTodo} from './lib/helpers'
 
 class App extends Component {
   
   state = {
     todos: [
-      {id:1, name:"Learn more", isCompleted:true},
-      {id:2, name:"Talk a little", isCompleted:false},
-      {id:3, name:"Do whatever", isCompleted:false}
+      {id:1, name:"Learn more", isComplete:true},
+      {id:2, name:"Talk a little", isComplete:false},
+      {id:3, name:"Do whatever", isComplete:false}
     ],
     currentTodo: ''
+  }
+
+  handleChange = (id) => {
+    const todo = findById(id, this.state.todos);
+    const toggledTodo = toggleTodo(todo);
+    const updatedTodos = updateTodo(this.state.todos, toggledTodo);
+    this.setState({
+      todos: updatedTodos
+    });
   }
 
   handleSubmit = (evt) => {
@@ -54,7 +63,8 @@ class App extends Component {
             handleInputChange={this.handleInputChange}
             handleSubmit={submitHandler}
             currentTodo={this.state.currentTodo} />
-          <TodoList todos={this.state.todos} />
+          <TodoList todos={this.state.todos}
+            handleChange={this.handleChange} />
         </div>
       </div>
     );

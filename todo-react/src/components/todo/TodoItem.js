@@ -1,11 +1,13 @@
 import React from 'react'
-
+import {partial} from '../../lib/utils'
 
 export const TodoItem = (props) => {
+  const handleChange = partial(props.handleChange, props.id);
   return (
     <li>
       <input type="checkbox"
-        defaultChecked={props.isCompleted}/>
+        checked={props.isComplete}
+        onChange={handleChange}/>
       {props.name}
     </li>
   );
