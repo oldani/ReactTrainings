@@ -57,3 +57,8 @@ span.remove-item a {
 li:hover span.remove-item {
   visibility: visible;
 }
+
+.footer a {
+  padding-left: 10px;
+  padding-right: 10px;
+}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {TodoForm, TodoList} from './components/todo'
+import {Footer} from './components/Footer'
 import {addTodo, generateId, findById, toggleTodo, updateTodo, removeTodo} from './lib/helpers'
 import {partial, pipe} from './lib/utils'
 
@@ -75,6 +76,7 @@ class App extends Component {
             handleChange={this.handleChange}
             handleRemove={this.handleRemove} />
         </div>
+        <Footer />
       </div>
     );
   }
