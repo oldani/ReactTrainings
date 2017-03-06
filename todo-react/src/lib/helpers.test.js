@@ -1,4 +1,4 @@
-import {addTodo, findById, toggleTodo, updateTodo} from './helpers'
+import {addTodo, findById, toggleTodo, updateTodo, removeTodo} from './helpers'
 
 
 test('addTodo should add the passed todo to the list', () => {
@@ -92,6 +92,34 @@ test('updateTodo should not mutate the original array', () => {
   const updatedTodo = {id:2, name: 'two', isComplete: true};
 
   const result = updateTodo(startTodos, updatedTodo);
+
+  expect(result).not.toBe(startTodos);
+});
+
+test('removeTodo should remove an item by id', () => {
+  const startTodos = [
+    {id:1, name: 'one', isComplete: false},
+    {id:2, name: 'two', isComplete: false},
+    {id:3, name: 'three', isComplete: false}
+  ];
+  const todoId = 2
+  const expected = [
+    {id:1, name: 'one', isComplete: false},
+    {id:3, name: 'three', isComplete: false}
+  ];
+  const result = removeTodo(startTodos, todoId);
+
+  expect(result).toEqual(expected)
+});
+
+test('removeTodo should not mutate original array', () => {
+  const startTodos = [
+    {id:1, name: 'one', isComplete: false},
+    {id:2, name: 'two', isComplete: false},
+    {id:3, name: 'three', isComplete: false}
+  ];
+  const todoId = 2;
+  const result = removeTodo(startTodos, todoId);
 
   expect(result).not.toBe(startTodos);
 });
